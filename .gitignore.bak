@@ -22,7 +22,6 @@ logs/**
 
 # and don't keep the USvideos dataset
 data/01_raw/USvideos.csv
-data/01_raw/US_category_id.json
 
 
 ##########################
