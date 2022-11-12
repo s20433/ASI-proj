@@ -7,7 +7,7 @@ https://drive.google.com/file/d/1G6icoXjMi5tiISfzxOBD7zY-k5OilURP/view
 ## Przydatne materiały
 
 https://dvc.org/doc/user-guide/how-to/setup-google-drive-remote
-`dvc remote add myremote gdrive://...`
+
 
 
 # Generic Kedro nonsense

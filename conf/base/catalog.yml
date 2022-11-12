@@ -2,3 +2,34 @@
 #
 # Documentation for this file format can be found in "The Data Catalog"
 # Link: https://kedro.readthedocs.io/en/stable/data/data_catalog.html
+
+CAvideos:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/CAvideos.csv
+DEvideos:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/DEvideos.csv
+FRvideos:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/FRvideos.csv
+GBvideos:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/GBvideos.csv
+INvideos:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/INvideos.csv
+JPvideos:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/JPvideos.csv
+KRvideos:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/KRvideos.csv
+MXvideos:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/MXvideos.csv
+RUvideos:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/RUvideos.csv
+USvideos:
+  type: pandas.CSVDataSet
+  filepath: data/01_raw/USvideos.csv
