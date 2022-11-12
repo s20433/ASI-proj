@@ -20,6 +20,11 @@ logs/**
 # also keep all .gitkeep files
 !.gitkeep
 
+# and don't keep the USvideos dataset
+data/01_raw/USvideos.csv
+data/01_raw/US_category_id.json
+
+
 ##########################
 # Common files
 
