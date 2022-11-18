@@ -12,10 +12,10 @@ def read_files(datasets_path: str):
     '''Sczytuje csv'ki i JSONy zawierające informacje
     o kategoriach ze ścieżki z danymi
     
-    Wejśćie: 
+    ### Wejśćie: 
     datasets_path: string będący ścieżką do danych
 
-    Wyjście:
+    ### Wyjście:
     csvs: słownik gdzie kluczem jest nazwa pliku, a wartością dataframe
     categories: słownik gdzie kluczem jest id kategorii, a wartością nazwa
     '''
@@ -42,20 +42,17 @@ def read_files(datasets_path: str):
     
     return csvs, categories
 
+def prepare_trending_data(csvs: Dict[str, DataFrame], categories: Dict[int, str]) -> Dict[str, DataFrame]:
+    '''Przygotowuje dane do dalszego działania:
+        - usuwa puste pola
+        - zamienia identyfikator kategorii na jej nazwę
+    
+    ### Wejście:
+    csvs: słownik gdzie kluczem jest nazwa pliku, a wartością dataframe
+    categories: słownik gdzie kluczem jest id kategorii, a wartością nazwa
 
-
-
-
-
-
-
-
-
-
-# {1: "Film & Animations", 10: "Music"}
-
-def prepare_trending_data(csvs: Dict[str, DataFrame], categories: Dict[int, str]):
-    '''
+    ### Wyjście:
+    trending_data: słownik gdzie kluczem jest nazwa pliku, a wartością dobrze przygotowany dataframe
     '''
     trending_data = {}
 
@@ -63,10 +60,10 @@ def prepare_trending_data(csvs: Dict[str, DataFrame], categories: Dict[int, str]
         # wzięte z artykułu
         csv["description"] = csv["description"].fillna(value="")
 
-        # brzydki sposób na zamianę id kategorii na jej nazwę
+        # zamiana id kategorii na jej nazwę
         csv["category"] = ""
         for row in csv.index:
-            csv["category"][row] = categories[int(csv["category_id"][row])]
+            csv.loc[row, "category"] = categories[int(csv.loc[row, "category_id"])]
             
         csv.pop("category_id")
         trending_data[country] = csv
