@@ -8,7 +8,9 @@ import logging
 from pandas import DataFrame
 from typing import Dict
 
-def prepare_data_for_models(data_raw):
+log = logging.getLogger(__name__)
+
+def prepare_data_for_models(trending_data: Dict[str, DataFrame]):
     '''Przygotowuje dane, żeby na ich podstawie utworzyć model
     
     ### Wejście:
@@ -17,23 +19,19 @@ def prepare_data_for_models(data_raw):
     ### Wyjście:
     country_data: ten sam dataframe, ale w formacie X i y, gdzie
         X zawiera cechy filmików na czasie, a
-        y 
-    '''
-    pass
-
-def create_models(trending_data: Dict[str, DataFrame]):
-    '''Tworzy kilka modeli na podstawie słownika dataframe'ów
-    
-    ### Wejście:
-    trending_data: słownik gdzie kluczem jest nazwa pliku, a wartością dobrze przygotowany dataframe
-
-    ### Wyjście:
-    models: słownik gdzie kluczem jest nazwa pliku, a wartością stworzony model
+        y czy film, według stosunku łapek w górę do łapek w dół, jest dobry 
     '''
 
-    models = {}
+    prepared_data = {}
 
     for country, df in trending_data.items():
-        models[country] = prepare_data_for_models(df)
+        X = df[("title", "channel_title", "tags", "views", "likes", "dislikes", "comment_count", "description")]
+        y = pd.Series()
+        for row in df.index:
+            likes = df.loc[row, "likes"]
+            dislikes = df.loc[row, "dislikes"]
+            log.info("Likes to dislikes: ", (likes/dislikes))
+            y[row] = 1 if (likes / dislikes) >= 0.5 else 0
+            prepared_data[country] = pd.DataFrame((X, y))
 
-    return models
+    return prepared_data
