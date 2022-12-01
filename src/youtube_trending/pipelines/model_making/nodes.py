@@ -23,15 +23,15 @@ def prepare_data_for_models(trending_data: Dict[str, DataFrame]):
 
     prepared_data = {}
 
-    for country, df in trending_data.items():
-        X = df[["title", "channel_title", "tags", "views", "likes", "dislikes", "comment_count", "description"]]
-        y = pd.Series(name="good_video")
-        for row in df.index:
-            likes = df.loc[row, "likes"]
-            dislikes = df.loc[row, "dislikes"]
-            log.info(f"Likes to dislikes: {(likes/dislikes)}")
-            y[row] = 1 if (likes / dislikes) >= 0.5 else 0
-            prepared_data[country] = pd.DataFrame((X, y))
+    for country, csv in trending_data.items():
+        X = csv[["title", "channel_title", "tags", "views", "likes", "dislikes", "comment_count", "description"]]
+        y = []
+        for row in csv.index:
+            likes = csv.loc[row, "likes"]
+            dislikes = csv.loc[row, "dislikes"]
+            is_good = 1 if (likes / dislikes) >= 0.5 else 0
+            y.append(is_good)
+            prepared_data[country] = pd.concat([X, pd.Series(y)], axis=1)
 
     return prepared_data
 
