@@ -4,15 +4,15 @@ generated using Kedro 0.18.3
 """
 
 from kedro.pipeline import Pipeline, node, pipeline
-from .nodes import prepare_data_for_model, create_models
+from .nodes import prepare_data_for_models, create_models
 
 
 def create_pipeline(**kwargs) -> Pipeline:
     return pipeline([
         node(
-            func=create_models,
+            func=prepare_data_for_models,
             inputs="trending_data",
-            outputs="models",
+            outputs="prepared_data",
             name="model_making_node",
         )
     ])

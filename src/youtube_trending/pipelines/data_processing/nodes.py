@@ -38,7 +38,8 @@ def read_files(datasets_path: str):
         elif f.endswith('.csv'):
             csv = pd.read_csv(file_path, encoding='ISO-8859-1')
             # Dodaje do słownika
-            csvs[f] = csv
+            country = f.removesuffix("videos.csv")
+            csvs[country] = csv
     
     return csvs, categories
 
