@@ -29,9 +29,18 @@ def prepare_data_for_models(trending_data: Dict[str, DataFrame]):
         for row in csv.index:
             likes = csv.loc[row, "likes"]
             dislikes = csv.loc[row, "dislikes"]
-            is_good = 1 if (likes / dislikes) >= 0.5 else 0
+#!!!
+#!!!
+#!!!
+            # Kontrowersyjne: jeśli nie ma łapek w dół, może też mieć mało wyświetleń
+            # Więc ciężko stwierdzić, czy stosunek likes/0 faktycznie skutkuje dobrym filmem
+            if dislikes == 0:
+                is_good = 0
+            else:
+                # filmiki mające stosunek 
+                is_good = 1 if (likes / dislikes) <= 0.57 else 0
             y.append(is_good)
-            prepared_data[country] = pd.concat([X, pd.Series(y)], axis=1)
+        prepared_data[country] = pd.concat([X, pd.Series(y)], axis=1)
 
     return prepared_data
 
