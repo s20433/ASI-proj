@@ -13,6 +13,6 @@ def create_pipeline(**kwargs) -> Pipeline:
             func=prepare_data_for_models,
             inputs="trending_data",
             outputs="prepared_data",
-            name="model_making_node",
+            name="data_preparing_node",
         )
     ])

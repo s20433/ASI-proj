@@ -45,21 +45,44 @@ def prepare_data_for_models(trending_data: Dict[str, DataFrame]):
     return prepared_data
 
 
-
+'''
 from sklearn.model_selection import train_test_split
 import tensorflow as tf
-from keras.models import Sequential
+from keras.models import Model, Sequential
 from keras.layers import *
 
-def create_models(prepared_data: Dict[str, DataFrame]):
+import pycaret
+from pycaret.classification import setup
+from pycaret.classification import tune_model
+import optuna
+from optuna.integration import KerasPruningCallback
 
+def create_models(prepared_data: Dict[str, DataFrame]) -> Dict[str, Model]:
     models = {}
 
     for country, df in prepared_data.items():
-        X_train, X_test, y_train, y_test = train_test_split(df[:,-1], df[-1], test_size=0.2)
-        model = Sequential([
-            Input(X_train),
-        ])
-        models[country] = model
+        model_setup = setup(data=df, target="good_video", session_id=2137069)
+        best_model = model_setup.compare_models()
+        models[country] = tune_model(best_model)
 
     return models
+
+def objective(models, trial: optuna.Trial):
+    factor = trial.suggest_int("learning-rate-factor", low=-8, high=-3)
+    learning_rate = 10**factor
+    optimizer = tf.keras.optimizers.Adam(
+        learning_rate=learning_rate
+    )
+    accuracies = []
+    for country, model in models.items():
+        model.compile(
+            optimizer=optimizer,
+            loss="categorical_crossentropy",
+            metrics=["accuracy"]
+        )
+        model.fit(
+
+        )
+    
+    return accuracies
+'''
