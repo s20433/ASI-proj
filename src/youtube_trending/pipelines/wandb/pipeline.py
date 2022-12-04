@@ -10,7 +10,7 @@ def create_pipeline(**kwargs) -> Pipeline:
     return pipeline([
         node(
             func=run_wandb,
-            inputs="models, params:n_estimators, params:max_depth",
+            inputs=["models", "params:n_estimators", "params:max_depth"],
             outputs="",
             name="wandb_node"
         )
