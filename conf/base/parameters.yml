@@ -1,1 +1,3 @@
 datasets_path: "data/01_raw"
+optuna_trial:
+  type: optuna.trial.Trial
