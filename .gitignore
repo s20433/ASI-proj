@@ -20,6 +20,9 @@ conf/**/*credentials*
 # also keep all .gitkeep files
 !.gitkeep
 
+# ignore everything in the mlruns folders
+mlruns/**
+
 ##########################
 # Common files
 

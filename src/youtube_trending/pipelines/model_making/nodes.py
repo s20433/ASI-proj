@@ -44,6 +44,7 @@ def prepare_data_for_models(trending_data: Dict[str, DataFrame]):
 import wandb
 from pycaret.classification import setup
 from pycaret.classification import tune_model
+from functools import partial
 
 def create_models(prepared_data: Dict[str, DataFrame]):
     '''Wykorzystuje przygotowane dane, żeby za pomocą PyCareta wybrać najlepszy
@@ -59,7 +60,10 @@ def create_models(prepared_data: Dict[str, DataFrame]):
     '''
     models = {}
 
-    wandb.init(project="youtube_trending_tracking")
+    wandb.init(
+        project="youtube_trending_tracking",
+        mode="offline"
+    )
 
     for country, df in prepared_data.items():
         model_setup = setup(
@@ -78,13 +82,20 @@ def create_models(prepared_data: Dict[str, DataFrame]):
 import optuna
 from optuna import Trial
 
-def objective(trial: Trial):
+def objective(trial: Trial, models):
+    _tune_model_parameters(models, trial)
     pass
 
 
-def tune_model_parameters(models, optuna_trial: Trial):
-    '''
+def _tune_model_parameters(models, optuna_trial: Trial):
+    '''Dostraja modele wykorzystując parametry zasugerowane przez Optunę
     
+    ### Wejście:
+    models: słownik, gdzie kluczem jest nazwa kraju, a wartością wybrany przez PyCareta model
+    optuna_trial: Wstrzyknięty z zewnątrz trial Optuny, żeby wykonywać sugestie
+
+    ### Wyjście:
+    tuned_models: ten sam słownik, tylko z dostrojonymi modelami
     '''
     tuned_models = {}
 
@@ -95,6 +106,14 @@ def tune_model_parameters(models, optuna_trial: Trial):
         )
         tuned_models[country] = tuned_model
     
+    return tuned_models
+
+def tune_model_parameters(models):
+    '''Uruchamia Optunę
+    
+    ### Wejście:
+    models: słownik, gdzie kluczem jest nazwa kraju, a wartością wybrany przez PyCareta model
+    '''
     study = optuna.create_study(
         storage="sqlite:///yt-trending-trials.db",
         sampler=optuna.samplers.NSGAIISampler(),
@@ -103,6 +122,5 @@ def tune_model_parameters(models, optuna_trial: Trial):
         direction=optuna.study.StudyDirection.MAXIMIZE,
         load_if_exists=True
     )
-    study.optimize(func=objective, n_trials=10, n_jobs=1, show_progress_bar=True)
-    
-    return tuned_models
+    study.optimize(func=partial(objective, models=models), n_trials=10, n_jobs=1, show_progress_bar=True)
+

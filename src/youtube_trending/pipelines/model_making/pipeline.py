@@ -20,7 +20,7 @@ def create_pipeline(**kwargs) -> Pipeline:
             inputs="prepared_data",
             outputs="models",
             name="pycaret_model_finder_node"
-        )#,
+        ),
         #node(
         #    func=tune_model_parameters,
         #    inputs=["models", "params:optuna_trial"],
