@@ -1,0 +1,51 @@
+{
+    "os": "Windows-10-10.0.22621-SP0",
+    "python": "3.10.6",
+    "heartbeatAt": "2022-12-08T11:32:52.494292",
+    "startedAt": "2022-12-08T11:32:52.278129",
+    "docker": null,
+    "cuda": null,
+    "args": [
+        "run"
+    ],
+    "state": "running",
+    "program": "-m __main__",
+    "git": {
+        "remote": "git@github.com:s20433/ASI-proj.git",
+        "commit": "5cdc29f4e49cf624f0a18c0593ca171c559d2a80"
+    },
+    "email": "filippiatkowski@outlook.com",
+    "root": "C:/Users/filip/Desktop/pj/ASI/projekt/youtube-trending",
+    "host": "LAPTOP-VJB4LAD1",
+    "username": "filip",
+    "executable": "C:\\Users\\filip\\.conda\\envs\\asi\\python.exe",
+    "cpu_count": 6,
+    "cpu_count_logical": 12,
+    "cpu_freq": {
+        "current": 2321.0,
+        "min": 0.0,
+        "max": 3301.0
+    },
+    "cpu_freq_per_core": [
+        {
+            "current": 2321.0,
+            "min": 0.0,
+            "max": 3301.0
+        }
+    ],
+    "disk": {
+        "total": 475.69237899780273,
+        "used": 192.3998146057129
+    },
+    "gpu": "NVIDIA GeForce RTX 3060 Laptop GPU",
+    "gpu_count": 1,
+    "gpu_devices": [
+        {
+            "name": "NVIDIA GeForce RTX 3060 Laptop GPU",
+            "memory_total": 6442450944
+        }
+    ],
+    "memory": {
+        "total": 15.871395111083984
+    }
+}

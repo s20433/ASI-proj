@@ -60,9 +60,8 @@ def create_models(prepared_data: Dict[str, DataFrame]):
     '''
     models = {}
 
-    wandb.init(
-        project="youtube_trending_tracking",
-        mode="offline"
+    run = wandb.init(
+        project="youtube_trending_tracking"
     )
 
     for country, df in prepared_data.items():
@@ -77,6 +76,7 @@ def create_models(prepared_data: Dict[str, DataFrame]):
         models[country] = model_setup.compare_models(
             include=["dt", "gbc", "ada", "rf", "et", "ridge", "knn"]
         )
+    run.finish()
     return models
 
 import optuna
