@@ -1,0 +1,16 @@
+---
+version: "3.9"
+services:
+  &service youtube-trending:
+    image: *service
+    build:
+      context: youtube-trending
+    container_name: youtube-trending
+    ports:
+      - mode: host
+        host_ip: 127.0.0.1
+        target: 8000
+        published: 8000
+        protocol: tcp
+    hostname: *service
+    restart: always
