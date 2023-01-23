@@ -4,6 +4,7 @@ FROM $BASE_IMAGE as runtime-environment
 # install project requirements
 COPY src/requirements.txt /tmp/requirements.txt
 RUN pip install --no-cache -r /tmp/requirements.txt && rm -f /tmp/requirements.txt
+RUN pip install -e src
 
 # add kedro user
 ARG KEDRO_UID=999
@@ -23,4 +24,4 @@ COPY --chown=${KEDRO_UID}:${KEDRO_GID} . .
 
 EXPOSE 8888
 
-CMD ["kedro", "run"]
+CMD ["uvicorn", "src.youtube_trending.api:app", "--reload"]

@@ -60,9 +60,7 @@ def create_models(prepared_data: Dict[str, DataFrame]):
     '''
     models = {}
 
-    run = wandb.init(
-        project="youtube_trending_tracking"
-    )
+    run = wandb.init(project="youtube_trending_tracking")
 
     for country, df in prepared_data.items():
         model_setup = setup(

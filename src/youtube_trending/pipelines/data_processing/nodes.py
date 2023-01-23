@@ -68,5 +68,4 @@ def prepare_trending_data(csvs: Dict[str, DataFrame], categories: Dict[int, str]
             
         csv.pop("category_id")
         trending_data[country] = csv
-
     return trending_data
