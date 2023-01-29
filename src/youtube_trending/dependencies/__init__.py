@@ -1,1 +1,1 @@
-from .dependencies import create_data_pipeline, create_data_full_pipeline
+from .dependencies import create_data_pipeline, create_data_full_pipeline, get_data
