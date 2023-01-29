@@ -6,6 +6,7 @@ from kedro.pipeline import Pipeline
 from youtube_trending.pipelines import data_processing, model_making
 
 def get_data() -> Iterable[DataCatalog]:
+    # TODO jak tu przepchnąć dvc pull?
     return DataCatalog(feed_dict={'params:datasets_path': "data/01_raw"})
 
 def create_data_pipeline() -> Iterable[Pipeline]:

@@ -1,14 +1,12 @@
-from typing import Any, Dict, List
+from typing import Any
 import random
 
-from youtube_trending.dependencies import create_data_full_pipeline, get_data
-
 from fastapi import APIRouter, Depends
-from fastapi.exceptions import HTTPException
-
 from kedro.io import DataCatalog
 from kedro.pipeline import Pipeline
 from kedro.runner import SequentialRunner
+
+from youtube_trending.dependencies import create_data_full_pipeline, get_data
 
 router = APIRouter()
 
@@ -27,5 +25,4 @@ def process_data(
         key = country_code
     random_value = the_data.get(key).sample()
     return {"random video trending in: "+str(key): str(random_value)}
-
 
